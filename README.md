@@ -70,95 +70,45 @@ mvn spring-boot:run
 
 <img src="https://user-images.githubusercontent.com/68719151/93407728-caa4bf00-f8cd-11ea-816d-440d78b99fc2.JPG" width="90%"></img>
 
-<img src="" width="90%"></img>
+<img src="https://user-images.githubusercontent.com/68719151/93407734-cc6e8280-f8cd-11ea-9fb2-a57fdcc2efeb.JPG" width="90%"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93407740-ce384600-f8cd-11ea-9949-bd8d5f0e603b.JPG" width="90%"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93407745-d0020980-f8cd-11ea-8750-bc9476cfe069.JPG" width="90%"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93407749-d1cbcd00-f8cd-11ea-975d-9890415029f9.JPG" width="90%"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93407750-d2fcfa00-f8cd-11ea-8b7e-308a9a13b3f4.JPG" width="90%"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93407753-d42e2700-f8cd-11ea-8090-7c92f062303c.JPG" width="90%"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93407761-d7c1ae00-f8cd-11ea-962e-a044f7a501ec.JPG" width="90%"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93407764-d8f2db00-f8cd-11ea-98bc-f05bb7baf0c1.JPG" width="90%"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93407767-dabc9e80-f8cd-11ea-892a-43b35b790ec1.JPG" width="90%"></img>
+
+## CQRS
+
+- 고객은 자신의 예약 상태를 뷰(Page) 를 통해 확인할 수 있다. 
+<img src="https://user-images.githubusercontent.com/68719151/93408111-b90fe700-f8ce-11ea-8ba6-a39abf52f577.JPG"></img>
 
 
-CQRS
-하나 이상의 데이터 소스에서 데이터를 프로젝션하는 아키텍처
-고객은 자신의 예약 상태를 뷰 (OrderPage) 를 통해 확인할 수 있다. 예약 요청 이벤트(ReservationRequested)가 발생되면 자동으로 생성되며, 예약 접수 이벤트(ReservationAccepted)나 예약 취소 이벤트(ReservationCanced) 발생 시 예약 상태값이 변경된다.
+## 동기식 호출 
 
-OrderPage 뷰
-다운로드22
+- 예약 시 재고확인하는 부분을 FeignClient를 사용하여 동기식 트랜잭션으로 처리 
 
-동기식 호출
-예약과 재고확인/재고변경 호출은 동기식 트랜잭션으로 처리
+<img src="https://user-images.githubusercontent.com/68719151/93408247-08eeae00-f8cf-11ea-97d3-3e857b4deac7.JPG"></img>
+<img src="https://user-images.githubusercontent.com/68719151/93408251-0ab87180-f8cf-11ea-849b-6b3c584f5bd2.JPG"></img>
 
-    /**
-     * 예약접수를 신청하면 상품수량을 확인하고 예약가능/불가여부를 판단
-     * */
-    @PrePersist
-    public void onPrePersist(){
-        //Tshop.external.Product product = new Tshop.external.Product();
+## 폴리글랏
 
-        String checkQuantity = ReservationApplication.applicationContext.getBean(Tshop.external.ProductService.class).checkProductQuantity(this.getProductId().toString());
+- view페이지인 page 서비스에서는 DB hsql를 적용함
 
-        if(Integer.parseInt(checkQuantity) > 0){
-            this.setStatus("예약신청");
-        }else{
-            this.setStatus("예약불가");
-        }
-    }
-    
-    /**
-     * FeignClient를 사용한 ProductService 동기식호출
-     **/
-    @FeignClient(name="Product", url="${api.url.product}")
-    public interface ProductService {
+<img src="https://user-images.githubusercontent.com/68719151/93408246-0724ea80-f8cf-11ea-81c5-17fd29f96ba5.JPG"></img>
 
-    @RequestMapping(method= RequestMethod.GET, path="/products/check",produces = "application/json")   
-    @ResponseBody String checkProductQuantity(@RequestParam("productId") String productId);
 
-}
-예약신청을 하면 현 재고상태를 확이하여, 신청/불가 판단
-@RequiredArgsConstructor
-@Service
-public class ProductService {
-    private final ProductRepository productRepository;
 
-    @Transactional
-    public String checkQuantityByProductId(String productId) {
-
-        Optional<Product> optionalProduct = productRepository.findById(Long.parseLong(productId));
-        Product product = optionalProduct.orElseGet(Product::new);
-        // 상품이 없을경우 재고0으로 전달
-        if(product.getQuantity() == null) product.setQuantity(0);
-        // 상품재고가 있는 경우 재고 -1 하고 할당으로 이벤트 전달
-        if( product.getQuantity() > 0 ){
-            product.setQuantity(product.getQuantity()-1);
-            productRepository.save(product);
-            //product.pulishQuantityChecked();
-        }
-        return product.getQuantity().toString() ;
-    }
-}
-상품재고를 판단하여 리턴
-    /**
-     * 예약신청 가능이면 배정관리서비스로 예약번호 전송
-     * */
-    @PostPersist
-    public void onPostPersist(){
-        ReservationRequested reservationRequested = new ReservationRequested();
-        BeanUtils.copyProperties(this, reservationRequested);
-        if("예약신청".equals(this.getStatus())) reservationRequested.publishAfterCommit();
-    }
-    /**
-상태가 예약신청가능한 상태면 배정
-폴리글랏
-고객관리 서비스(customercenter)팀에서는 DataBase를 H2가 아닌 비슷한 계열의 인메모리 DB hsql를 적용함
-
-<name>customercenter</name>
-<!-- <dependency>
-<groupId>com.h2database</groupId>
-<artifactId>h2</artifactId>
-<scope>runtime</scope>
-</dependency>-->
-
-<dependency>
-<groupId>org.hsqldb</groupId>
-<artifactId>hsqldb</artifactId>
-<version>2.4.0</version>
-<scope>runtime</scope>
-</dependency>
 운영
 CI/CD 설정
 각 구현체들은 각자의 source repository 에 구성되었고, Deployment.yaml 설정을 통해 배포 됨
