@@ -131,7 +131,10 @@
  -  reservation의 deployment.yaml에서 readness 적용 된 부분을 수정하고, 부하 테스트 중 새로 배포를 진행하였더니 다음과 같이 availablity가 떨어짐 
  
  <img src="https://user-images.githubusercontent.com/68719151/93424372-e3739b80-f8f2-11ea-940a-fcd630dc5c50.JPG"></img>
+ 
  <img src="https://user-images.githubusercontent.com/68719151/93424373-e40c3200-f8f2-11ea-808d-1fd455dcdd0a.JPG"></img>
+ 
  <img src="https://user-images.githubusercontent.com/68719151/93424376-e4a4c880-f8f2-11ea-9b38-194cb8b5ad44.JPG"></img>
+ 
  <img src="https://user-images.githubusercontent.com/68719151/93424378-e53d5f00-f8f2-11ea-8ac6-c4da8b982ed8.JPG"></img>
 
