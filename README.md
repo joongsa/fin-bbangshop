@@ -110,22 +110,18 @@
 
 ## 오토스케일 아웃
 
+ - Mertric 서버 설치 후 오토스케일링 TEST
+ - reservation의 deployment.yaml수정 후 배포 
 
+<img src="https://user-images.githubusercontent.com/68719151/93408895-9f6f9f00-f8d0-11ea-9c2c-e40e4335e90b.JPG"></img>
 
-<img src=""></img>
-<img src=""></img>
+<img src="https://user-images.githubusercontent.com/68719151/93408910-aac2ca80-f8d0-11ea-90ff-75d3c01f52b8.JPG"></img>
 
+<img src="https://user-images.githubusercontent.com/68719151/93408953-c1692180-f8d0-11ea-9ef0-dde5cf3e84e4.JPG"></img>
 
-앞서 CB 는 시스템을 안정되게 운영할 수 있게 해줬지만 사용자의 요청을 100% 받아들여주지 못했기 때문에 이에 대한 보완책으로 자동화된 확장 기능을 적용하고자 한다.
+<img src="https://user-images.githubusercontent.com/68719151/93408929-b4e4c900-f8d0-11ea-8d57-8013d1d2840a.JPG"></img>
 
-상품서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 10프로를 넘어서면 replica 를 10개까지 늘려준다:
-kubectl autoscale deploy reservation --min=1 --max=10 --cpu-percent=10
-CB 에서 했던 방식대로 워크로드를 30초 동안 걸어준다.
-siege -c10 -t30S  -v --content-type "application/json" 'http://reservation:8080/reservations POST {"productId":1}'
-오토스케일이 어떻게 되고 있는지 모니터링을 걸어둔다:
-kubectl get deploy product -w
-어느정도 시간이 흐른 후 (약 30초) 스케일 아웃이 벌어지는 것을 확인할 수 있다:
-캡처4111
+<img src="https://user-images.githubusercontent.com/68719151/93408943-bc0bd700-f8d0-11ea-9fa9-44cea466bf4b.JPG"></img>
 
-siege 의 로그를 확인
-캡처4112
+<img src="https://user-images.githubusercontent.com/68719151/93408956-c332e500-f8d0-11ea-9b59-cd46fe189dd2.JPG"></img>
+
