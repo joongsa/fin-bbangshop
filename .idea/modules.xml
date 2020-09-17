@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/assignment/assignment.iml" filepath="$PROJECT_DIR$/assignment/assignment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bbangshop.iml" filepath="$PROJECT_DIR$/.idea/bbangshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway/boot-camp-gateway.iml" filepath="$PROJECT_DIR$/gateway/boot-camp-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bread/bread.iml" filepath="$PROJECT_DIR$/bread/bread.iml" />
+      <module fileurl="file://$PROJECT_DIR$/customercenter/customercenter.iml" filepath="$PROJECT_DIR$/customercenter/customercenter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/page/page.iml" filepath="$PROJECT_DIR$/page/page.iml" />
+      <module fileurl="file://$PROJECT_DIR$/reservation/reservation.iml" filepath="$PROJECT_DIR$/reservation/reservation.iml" />
+    </modules>
+  </component>
+</project>

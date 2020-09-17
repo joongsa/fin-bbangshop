@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="reservation" />
+        <module name="bread" />
+        <module name="boot-camp-gateway" />
+        <module name="customercenter" />
+        <module name="page" />
+        <module name="assignment" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="assignment" target="1.8" />
+      <module name="boot-camp-gateway" target="1.8" />
+      <module name="bread" target="1.8" />
+      <module name="customercenter" target="1.8" />
+      <module name="page" target="1.8" />
+      <module name="reservation" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="assignment" options="-parameters" />
+      <module name="boot-camp-gateway" options="-parameters" />
+      <module name="bread" options="-parameters" />
+      <module name="customercenter" options="-parameters" />
+      <module name="page" options="-parameters" />
+      <module name="reservation" options="-parameters" />
+    </option>
+  </component>
+</project>
