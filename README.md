@@ -31,14 +31,9 @@
 
 <img src="https://user-images.githubusercontent.com/68719151/93406808-93351300-f8cb-11ea-9a13-ea70247a6042.JPG" width="90%"></img>
 
-
-
-
-
-
-
-구현
-분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현하였다. 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 808n 이다)
+## 구현
+- 분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현
+- 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 7071 ~ 707n 이다)
 
 cd reservation
 mvn spring-boot:run
@@ -46,7 +41,7 @@ mvn spring-boot:run
 cd assignment
 mvn spring-boot:run 
 
-cd product
+cd bread
 mvn spring-boot:run  
 
 cd gateway
@@ -56,18 +51,27 @@ mvn spring-boot:run
 - 각 서비스내에 도출된 핵심 객체를 Entity 로 선언
   - 예약 -> reservation
   - 배정 -> assignment
-  - 상품 -> product
+  - 빵   -> bread
 
 ## 적용 후 REST API 의 테스트
-- 서비스의 예약처리 : http POST localhost:8088/reservations productId=1
-- 서비스의 예약취소 처리 : http PATCH localhost:8088/reservations/1 status="예약취소"
-- 예약상태 확인 : http localhost:8088/reservations/1
-SAGA 패턴
-취소에 따른 보상 트랜잭션 설계
-예약 도메인에 취소 요청이 들어오면, 취소 이벤트가 발생하며 (ReservationCancelRequested) 배정 도메인의 취소 정책(ReservationCancel)을 호출한다. 배정의 예약이 삭제되고, 예약 취소 이벤트(ReservationCanceled)가 발생하며 상품 도메인 쪽의 수량 변경 정책(QuantityChange)을 호출하여 수량을 원복해 줌과 동시에 예약 도메인의 상태 변경 정책(statusChange)을 호출하여 정상적으로 예약이 취소 되었음을 알려준다.
 
-취소 트랜잭션
-다운로드11
+- 한정판 빵 수량 등록 : http POST http://localhost:7073/breads breadName=cookie quantity=100
+- 빵 예약 : http POST http://localhost:7071/reservations breadId=2
+- 빵 예약 취소 : http PATCH http://localhost:7071/reservations/1 status=cancellation
+- 예약확인 : http GET http://localhost:7071/reservations
+- 배정확인 : http GET http://localhost:7072/assignments
+- 빵 재고확인 : http GET http://localhost:7073/breads
+- 뷰 확인 : http GET http://localhost:7074/pages
+
+## SAGA 패턴
+
+- 예약을 하면, 재고가 감소하고 배정이 되며 예약상태값이 breadSucceed로 변경된다. 
+- 예약을 취소하면 재고가 원복되고 배정은 삭제되며 예약상태값이 breadCanceled로 변경된다. 
+
+<img src="https://user-images.githubusercontent.com/68719151/93407728-caa4bf00-f8cd-11ea-816d-440d78b99fc2.JPG" width="90%"></img>
+
+<img src="" width="90%"></img>
+
 
 CQRS
 하나 이상의 데이터 소스에서 데이터를 프로젝션하는 아키텍처
