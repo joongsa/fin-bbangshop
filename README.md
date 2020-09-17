@@ -35,25 +35,13 @@
 - 분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현
 - 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 7071 ~ 707n 이다)
 
-cd reservation
-mvn spring-boot:run
-
-cd assignment
-mvn spring-boot:run 
-
-cd bread
-mvn spring-boot:run  
-
-cd gateway
-mvn spring-boot:run  
-
-## DDD 의 적용
+### DDD 의 적용
 - 각 서비스내에 도출된 핵심 객체를 Entity 로 선언
   - 예약 -> reservation
   - 배정 -> assignment
   - 빵   -> bread
 
-## 적용 후 REST API 의 테스트
+### 적용 후 REST API 의 테스트
 
 - 한정판 빵 수량 등록 : http POST http://localhost:7073/breads breadName=cookie quantity=100
 - 빵 예약 : http POST http://localhost:7071/reservations breadId=2
@@ -84,8 +72,6 @@ mvn spring-boot:run
 
 <img src="https://user-images.githubusercontent.com/68719151/93407761-d7c1ae00-f8cd-11ea-962e-a044f7a501ec.JPG" width="90%"></img>
 
-<img src="https://user-images.githubusercontent.com/68719151/93407764-d8f2db00-f8cd-11ea-98bc-f05bb7baf0c1.JPG" width="90%"></img>
-
 <img src="https://user-images.githubusercontent.com/68719151/93407767-dabc9e80-f8cd-11ea-892a-43b35b790ec1.JPG" width="90%"></img>
 
 ## CQRS
@@ -99,7 +85,9 @@ mvn spring-boot:run
 - 예약 시 재고확인하는 부분을 FeignClient를 사용하여 동기식 트랜잭션으로 처리 
 
 <img src="https://user-images.githubusercontent.com/68719151/93408247-08eeae00-f8cf-11ea-97d3-3e857b4deac7.JPG"></img>
+
 <img src="https://user-images.githubusercontent.com/68719151/93408251-0ab87180-f8cf-11ea-849b-6b3c584f5bd2.JPG"></img>
+
 
 ## 폴리글랏
 
@@ -107,19 +95,27 @@ mvn spring-boot:run
 
 <img src="https://user-images.githubusercontent.com/68719151/93408246-0724ea80-f8cf-11ea-81c5-17fd29f96ba5.JPG"></img>
 
+## 서킷 브레이킹
+
+ - istio를 이용한 CB TEST 
+
+<img src="https://user-images.githubusercontent.com/68719151/93408579-e3ae6f80-f8cf-11ea-8459-ac5f7ef7cd08.JPG"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93408602-ec06aa80-f8cf-11ea-8ee6-a48d9c01a7d7.JPG"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93408584-e5783300-f8cf-11ea-9bf1-982a5e87ebc5.JPG"></img>
+
+<img src="https://user-images.githubusercontent.com/68719151/93408587-e6a96000-f8cf-11ea-8834-f284425f45ff.JPG"></img>
 
 
-운영
-CI/CD 설정
-각 구현체들은 각자의 source repository 에 구성되었고, Deployment.yaml 설정을 통해 배포 됨
+## 오토스케일 아웃
 
-서킷 브레이킹
-부하테스터 siege 툴을 통한 서킷 브레이커 동작 확인:
-동시사용자 2명
-5초 동안 실시
-캡처1111
 
-오토스케일 아웃
+
+<img src=""></img>
+<img src=""></img>
+
+
 앞서 CB 는 시스템을 안정되게 운영할 수 있게 해줬지만 사용자의 요청을 100% 받아들여주지 못했기 때문에 이에 대한 보완책으로 자동화된 확장 기능을 적용하고자 한다.
 
 상품서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 10프로를 넘어서면 replica 를 10개까지 늘려준다:
