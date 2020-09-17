@@ -1,18 +1,14 @@
-#SKT 예판시스템 : Tshop
+# 한정판 빵집 키오스크 : bbangshop
 
-서비스 소스 레파지토리
+## 서비스 소스 레파지토리
+- https://github.com/myjukey/fin-reservation.git
+- https://github.com/myjukey/fin-assignment.git
+- https://github.com/myjukey/fin-bread.git
+- https://github.com/myjukey/fin-page.git
+- https://github.com/myjukey/fin-gateway.git
 
-
-https://github.com/myjukey/fin-bbangshop.git
-https://github.com/myjukey/fin-bbangshop.git
-https://github.com/myjukey/fin-bbangshop.git
-
-https://github.com/jayh36/tshop-assignment.git
-
-https://github.com/jayh36/tshop-customercenter.git
-
-서비스 시나리오
-● 기능적 요구사항
+## 서비스 시나리오
+### 기능적 요구사항
 
 고객이 집에서 휴대폰을 예약주문 한다. [예약신청]
 해당 상품재고 여부를 확인하여 예약가능/불가능 여부를 알려준다 [예약불가]
