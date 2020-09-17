@@ -28,7 +28,10 @@
  - 배정관리 서비스가 되지않더라도 예약접수는 정상적으로 처리가 되어야한다. Async (event-driven)
 
 ## 이벤트스토밍
-https://user-images.githubusercontent.com/68719151/93406808-93351300-f8cb-11ea-9a13-ea70247a6042.JPG
+
+<img src="https://user-images.githubusercontent.com/68719151/93406808-93351300-f8cb-11ea-9a13-ea70247a6042.JPG" width="90%"></img>
+
+
 
 
 
