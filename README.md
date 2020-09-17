@@ -1,10 +1,11 @@
-SKT 예판시스템 : Tshop
+#SKT 예판시스템 : Tshop
+
 서비스 소스 레파지토리
-https://github.com/jayh36/tshop-gateway.git
 
-https://github.com/jayh36/tshop-product.git
 
-https://github.com/jayh36/tshop-reservation.git
+https://github.com/myjukey/fin-bbangshop.git
+https://github.com/myjukey/fin-bbangshop.git
+https://github.com/myjukey/fin-bbangshop.git
 
 https://github.com/jayh36/tshop-assignment.git
 
